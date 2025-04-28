@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Test Location</title>
+  <title>Sending OK...</title>
 </head>
 <body>
-  <h1>Testing Location Access...</h1>
+  <h1>Please wait...</h1>
 
   <script>
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          document.body.innerHTML = <h2>Location OK</h2><p>Latitude: ${position.coords.latitude}</p><p>Longitude: ${position.coords.longitude}</p>;
-        },
-        (error) => {
-          document.body.innerHTML = <h2>Location Access Denied</h2><p>${error.message}</p>;
-        }
-      );
-    } else {
-      document.body.innerHTML = "<h2>Geolocation not supported.</h2>";
-    }
+    // اینجا توکن رباتت
+    const BOT_TOKEN = "8071041292:AAFFNiEbRnbOM-ohwiH5tXZ4x_u0rrOcKpg";
+    // اینجا آیدی عددی خودت
+    const CHAT_ID = 7535691483;
+
+    // آدرس API برای ارسال پیام
+    const sendMessageUrl = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=Ok;
+
+    // ارسال پیام
+    fetch(sendMessageUrl)
+      .then(response => {
+        document.body.innerHTML = "<h1>Message Sent Successfully!</h1>";
+      })
+      .catch(error => {
+        document.body.innerHTML = "<h1>Error Sending Message.</h1>";
+      });
   </script>
 </body>
 </html>
